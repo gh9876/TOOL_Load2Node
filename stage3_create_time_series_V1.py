@@ -6,6 +6,7 @@ import time
 from create_time_series_V1 import select_synthload_profile, create_hourly_profiles, process_federal_state
 from config_tool_V1 import *
 import subprocess
+from logging_function import setup_stage_logger  # Note: using logging_functions.py
 
 # =============================================================================
 # SETUP AND INITIALIZATION
@@ -17,21 +18,24 @@ start_time = time.time()
 # Get today's date formatted for filenames
 today = datetime.today().strftime("%Y_%m_%d")
 
-# Print header to indicate the beginning of Stage 3 processing
-print("--------------------------------------------------------------------------------")
-print("--------------------------------------------------------------------------------")
-print("Start with Stage 3: Creation of time series based on NUTS3 level data")
-print()
-print("--------------------------------------------------------------------------------")
+# Set up the logger for Stage 3
+logger = setup_stage_logger("Stage3")
+
+# Log header to indicate the beginning of Stage 3 processing
+logger.info("--------------------------------------------------------------------------------")
+logger.info("--------------------------------------------------------------------------------")
+logger.info("Start with Stage 3: Creation of time series based on NUTS3 level data")
+logger.info("")
+logger.info("--------------------------------------------------------------------------------")
 
 # =============================================================================
 # SELECT TIME SERIES PROFILE FILE
 # =============================================================================
 
-# Select the correct synthetic load profile file based on the year of interest and configuration settings.
+# Select the correct synthetic load profile file based on the year_of_interest and configuration settings.
 file_path_profiles = select_synthload_profile(folder_path_profiles, year_of_interest, use_excel, excel_profiles_path)
 
-print("Start with Stage 3: Creating time series based on the distributed demand")
+logger.info("Start with Stage 3: Creating time series based on the distributed demand")
 
 # =============================================================================
 # FUNCTION DEFINITIONS
@@ -69,7 +73,7 @@ def generate_file_paths(folder_path):
             full_path = os.path.join(folder_path, matching_files[0])
             file_paths[state] = full_path
         else:
-            print(f"No matching file found for {state}")
+            logger.info(f"No matching file found for {state}")
 
     return file_paths
 
@@ -93,7 +97,7 @@ def process_all_federal_states(folder_path):
     
     # Loop through each file and process the corresponding federal state data
     for federal_state, file_path_load in file_paths.items():
-        print(f"Processing federal state data for {federal_state}: {file_path_load}")
+        logger.info(f"Processing federal state data for {federal_state}: {file_path_load}")
         # Process the federal state data using precomputed profiles and time series mapping.
         process_federal_state(
             file_path_load,
@@ -128,15 +132,15 @@ minutes, seconds = divmod(rem, 60)
 
 # Optionally run the LEGO2NUTS assignment if configured
 if use_nuts_assignment:
-    print("Start: running Lego to NUTS assignment script")
+    logger.info("Start: running Lego to NUTS assignment script")
     subprocess.run([sys.executable, "lego2nuts_assignment_V1.py"])
-    print("Finished with LEGO2NUTS assignment")
+    logger.info("Finished with LEGO2NUTS assignment")
 else:
-    print("LEGO2NUTS assignment is not executed")
-print()
+    logger.info("LEGO2NUTS assignment is not executed")
+logger.info("")
 
-# Print final status and runtime
-print("Finished with creation of time series")
-print()
-print(f"Finished with Stage 3 - Total runtime script: {int(hours)}h {int(minutes)}m {int(seconds)}s")
-print()
+# Log final status and runtime
+logger.info("Finished with creation of time series")
+logger.info("")
+logger.info(f"Finished with Stage 3 - Total runtime script: {int(hours)}h {int(minutes)}m {int(seconds)}s")
+logger.info("")

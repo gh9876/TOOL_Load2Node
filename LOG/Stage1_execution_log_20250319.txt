@@ -1,0 +1,112 @@
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Start with Stage 1: Data Preprocessing
+
+--------------------------------------------------------------------------------
+Processing energy balance sheets for federal states
+Processing data for the year: 2022
+
+Starting processing for file: VorarlbergDatenPublikation
+Reading data from file: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Input/RAW_DATA/Energiebilanzen/VorarlbergDatenPublikation.ods
+Successfully loaded data from /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Input/RAW_DATA/Energiebilanzen/VorarlbergDatenPublikation.ods
+Preprocessing data for the year of interest
+Data preprocessing completed for year 2022
+Finished processing and storing data for file: VorarlbergDatenPublikation
+
+Starting processing for file: NiederoesterreichDatenPublikation
+Reading data from file: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Input/RAW_DATA/Energiebilanzen/NiederoesterreichDatenPublikation.ods
+Successfully loaded data from /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Input/RAW_DATA/Energiebilanzen/NiederoesterreichDatenPublikation.ods
+Preprocessing data for the year of interest
+Data preprocessing completed for year 2022
+Finished processing and storing data for file: NiederoesterreichDatenPublikation
+
+Starting processing for file: WienDatenPublikation
+Reading data from file: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Input/RAW_DATA/Energiebilanzen/WienDatenPublikation.ods
+Successfully loaded data from /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Input/RAW_DATA/Energiebilanzen/WienDatenPublikation.ods
+Preprocessing data for the year of interest
+Data preprocessing completed for year 2022
+Finished processing and storing data for file: WienDatenPublikation
+
+Starting processing for file: SteiermarkDatenPublikation
+Reading data from file: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Input/RAW_DATA/Energiebilanzen/SteiermarkDatenPublikation.ods
+Successfully loaded data from /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Input/RAW_DATA/Energiebilanzen/SteiermarkDatenPublikation.ods
+Preprocessing data for the year of interest
+Data preprocessing completed for year 2022
+Finished processing and storing data for file: SteiermarkDatenPublikation
+
+Starting processing for file: KaerntenDatenPublikation
+Reading data from file: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Input/RAW_DATA/Energiebilanzen/KaerntenDatenPublikation.ods
+Successfully loaded data from /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Input/RAW_DATA/Energiebilanzen/KaerntenDatenPublikation.ods
+Preprocessing data for the year of interest
+Data preprocessing completed for year 2022
+Finished processing and storing data for file: KaerntenDatenPublikation
+
+Starting processing for file: SalzburgDatenPublikation
+Reading data from file: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Input/RAW_DATA/Energiebilanzen/SalzburgDatenPublikation.ods
+Successfully loaded data from /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Input/RAW_DATA/Energiebilanzen/SalzburgDatenPublikation.ods
+Preprocessing data for the year of interest
+Data preprocessing completed for year 2022
+Finished processing and storing data for file: SalzburgDatenPublikation
+
+Starting processing for file: TirolDatenPublikation
+Reading data from file: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Input/RAW_DATA/Energiebilanzen/TirolDatenPublikation.ods
+Successfully loaded data from /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Input/RAW_DATA/Energiebilanzen/TirolDatenPublikation.ods
+Preprocessing data for the year of interest
+Data preprocessing completed for year 2022
+Finished processing and storing data for file: TirolDatenPublikation
+
+Starting processing for file: BurgenlandDatenPublikation
+Reading data from file: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Input/RAW_DATA/Energiebilanzen/BurgenlandDatenPublikation.ods
+Successfully loaded data from /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Input/RAW_DATA/Energiebilanzen/BurgenlandDatenPublikation.ods
+Preprocessing data for the year of interest
+Data preprocessing completed for year 2022
+Finished processing and storing data for file: BurgenlandDatenPublikation
+
+Starting processing for file: OberoesterreichDatenPublikation
+Reading data from file: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Input/RAW_DATA/Energiebilanzen/OberoesterreichDatenPublikation.ods
+Successfully loaded data from /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Input/RAW_DATA/Energiebilanzen/OberoesterreichDatenPublikation.ods
+Preprocessing data for the year of interest
+Data preprocessing completed for year 2022
+Finished processing and storing data for file: OberoesterreichDatenPublikation
+
+Processed DataFrames:
+- VorarlbergDatenPublikation
+- NiederoesterreichDatenPublikation
+- WienDatenPublikation
+- SteiermarkDatenPublikation
+- KaerntenDatenPublikation
+- SalzburgDatenPublikation
+- TirolDatenPublikation
+- BurgenlandDatenPublikation
+- OberoesterreichDatenPublikation
+Finished processing energy balance sheets
+
+Processing employment statistics data
+
+Loading workforce data from file: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Input/RAW_DATA/G_ARB_1_Arbeitsstaetten_Hauptergebnisse_nach_NUTS3_Regionen.ods, sheet: LSE2022_ARB
+Finished processing employment statistics data
+
+Processing population statistics data for the year: 2022
+
+Loading population data from file: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Input/RAW_DATA/Bev_NUTS-Regionen_Zeitreihe.ods, sheet: Zeitreihe
+Finished processing population statistics data
+
+Processing land use data of forestry and agriculture
+
+Loading land use data from file: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Input/RAW_DATA/LuFBetriebeNachFlaechennutzung2020nBL.ods, sheet: Flaechennutzung
+Land use data successfully processed.
+Finished land use data
+--------------------------------------------------------------------------------
+Electrical demand data exported to /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage1/AT_Elektrische_Energie_aggregated_20250319.xlsx
+
+Data exported to /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage1/AT_Beschäftigte_NUTS_20250319.xlsx
+
+Data exported to /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage1/AT_Bevölkerung_NUTS_20250319.xlsx
+
+Data exported to /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage1/AT_Flächennutzung_Land_Forstwirtschaft_20250319.xlsx
+--------------------------------------------------------------------------------
+
+Finished with Stage 1
+Total runtime script: 0h 4m 34s
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------

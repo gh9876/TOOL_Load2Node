@@ -1,0 +1,21 @@
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Start with Stage 3: Creation of time series based on NUTS3 level data
+
+--------------------------------------------------------------------------------
+Start with Stage 3: Creating time series based on the distributed demand
+Processing federal state data for Burgenland: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage2/Energiebilanz_Verteilung_Burgenland_20250318.xlsx
+Processing federal state data for Kärnten: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage2/Energiebilanz_Verteilung_Kärnten_20250319.xlsx
+Processing federal state data for Niederösterreich: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage2/Energiebilanz_Verteilung_Niederösterreich_20250318.xlsx
+Processing federal state data for Oberösterreich: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage2/Energiebilanz_Verteilung_Oberösterreich_20250317.xlsx
+Processing federal state data for Salzburg: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage2/Energiebilanz_Verteilung_Salzburg_20250319.xlsx
+Processing federal state data for Steiermark: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage2/Energiebilanz_Verteilung_Steiermark_20250317.xlsx
+Processing federal state data for Tirol: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage2/Energiebilanz_Verteilung_Tirol_20250317.xlsx
+Processing federal state data for Vorarlberg: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage2/Energiebilanz_Verteilung_Vorarlberg_20250318.xlsx
+Processing federal state data for Wien: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage2/Energiebilanz_Verteilung_Wien_20250317.xlsx
+LEGO2NUTS assignment is not executed
+
+Finished with creation of time series
+
+Finished with Stage 3 - Total runtime script: 0h 0m 48s
+

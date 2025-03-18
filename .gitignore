@@ -7,3 +7,6 @@ __pycache__/
 
 # Ignore OS-specific files
 .DS_Store
+
+# Ignore data files
+.Data_Output/

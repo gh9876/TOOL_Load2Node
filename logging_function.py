@@ -18,7 +18,8 @@ def setup_stage_logger(stage_name):
 
     The logger writes output to a log file named with the stage name and the current date,
     and it also outputs log messages to the console. This function ensures that the log
-    directory exists before creating the file handler.
+    directory exists before creating the file handler. It also clears any previously
+    attached handlers so that a fresh log file is created for each stage.
 
     Parameters:
         stage_name (str): Name of the stage for log identification.
@@ -26,7 +27,7 @@ def setup_stage_logger(stage_name):
     Returns:
         logging.Logger: Configured logger for the specified stage.
     """
-    # Ensure the log directory exists; create it if necessary.
+    # Ensure the log directory exists.
     os.makedirs(folder_log, exist_ok=True)
     
     # Define the log file path using the stage name and today's date.
@@ -37,23 +38,25 @@ def setup_stage_logger(stage_name):
     logger = logging.getLogger(stage_name)
     logger.setLevel(logging.INFO)
     
-    # Prevent duplicate handlers if the logger is already set up.
-    if not logger.hasHandlers():
-        # Create a file handler to write log messages to the log file.
-        file_handler = logging.FileHandler(log_file_path)
-        file_handler.setLevel(logging.INFO)
-
-        # Create a stream handler to output log messages to the console.
-        stream_handler = logging.StreamHandler()
-        stream_handler.setLevel(logging.INFO)
-
-        # Define a simple formatter for both handlers.
-        simple_formatter = logging.Formatter('%(message)s')
-        file_handler.setFormatter(simple_formatter)
-        stream_handler.setFormatter(simple_formatter)
-
-        # Add both handlers to the logger.
-        logger.addHandler(file_handler)
-        logger.addHandler(stream_handler)
+    # Clear any existing handlers to ensure a new log file is used.
+    if logger.hasHandlers():
+        logger.handlers.clear()
+    
+    # Create a file handler for logging to a file.
+    file_handler = logging.FileHandler(log_file_path)
+    file_handler.setLevel(logging.INFO)
+    
+    # Create a stream handler for logging to the console.
+    stream_handler = logging.StreamHandler()
+    stream_handler.setLevel(logging.INFO)
+    
+    # Define a simple formatter for both handlers.
+    simple_formatter = logging.Formatter('%(message)s')
+    file_handler.setFormatter(simple_formatter)
+    stream_handler.setFormatter(simple_formatter)
+    
+    # Add both handlers to the logger.
+    logger.addHandler(file_handler)
+    logger.addHandler(stream_handler)
     
     return logger

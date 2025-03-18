@@ -1,0 +1,41 @@
+Starting Stage 2: Breakdown of energy demand by NUTS3 level
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Processing Burgenland dataset
+DataFrame saved successfully to /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage2/Energiebilanz_Verteilung_Burgenland_20250318.xlsx
+Total Allocated Energy Consumption for Burgenland (MWh): 1480135.5198208997
+
+Processing Niederösterreich dataset
+DataFrame saved successfully to /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage2/Energiebilanz_Verteilung_Niederösterreich_20250318.xlsx
+Total Allocated Energy Consumption for Niederösterreich (MWh): 13012349.959265117
+
+Processing Wien dataset
+DataFrame saved successfully to /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage2/Energiebilanz_Verteilung_Wien_20250318.xlsx
+Total Allocated Energy Consumption for Wien (MWh): 8012235.160000001
+
+Processing Kärnten dataset
+DataFrame saved successfully to /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage2/Energiebilanz_Verteilung_Kärnten_20250318.xlsx
+Total Allocated Energy Consumption for Kärnten (MWh): 4594525.963423351
+
+Processing Steiermark dataset
+DataFrame saved successfully to /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage2/Energiebilanz_Verteilung_Steiermark_20250318.xlsx
+Total Allocated Energy Consumption for Steiermark (MWh): 10485362.717837978
+
+Processing Oberösterreich dataset
+DataFrame saved successfully to /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage2/Energiebilanz_Verteilung_Oberösterreich_20250318.xlsx
+Total Allocated Energy Consumption for Oberösterreich (MWh): 14886808.877815045
+
+Processing Salzburg dataset
+DataFrame saved successfully to /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage2/Energiebilanz_Verteilung_Salzburg_20250318.xlsx
+Total Allocated Energy Consumption for Salzburg (MWh): 3547276.8920531864
+
+Processing Tirol dataset
+DataFrame saved successfully to /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage2/Energiebilanz_Verteilung_Tirol_20250318.xlsx
+Total Allocated Energy Consumption for Tirol (MWh): 5324796.101618873
+
+Processing Vorarlberg dataset
+DataFrame saved successfully to /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage2/Energiebilanz_Verteilung_Vorarlberg_20250318.xlsx
+Total Allocated Energy Consumption for Vorarlberg (MWh): 2759791.135651307
+
+Finished with Stage 2 - Total runtime script: 0h 0m 0s
+

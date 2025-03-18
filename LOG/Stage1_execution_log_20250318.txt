@@ -1,0 +1,31 @@
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Start with Stage 1: Data Preprocessing
+
+--------------------------------------------------------------------------------
+Processing energy balance sheets for federal states
+Processing data for the year: 2022
+
+Starting processing for file: VorarlbergDatenPublikation
+Reading data from file: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Input/RAW_DATA/Energiebilanzen/VorarlbergDatenPublikation.ods
+Successfully loaded data from /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Input/RAW_DATA/Energiebilanzen/VorarlbergDatenPublikation.ods
+Preprocessing data for the year of interest
+Data preprocessing completed for year 2022
+Finished processing and storing data for file: VorarlbergDatenPublikation
+
+Starting processing for file: NiederoesterreichDatenPublikation
+Reading data from file: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Input/RAW_DATA/Energiebilanzen/NiederoesterreichDatenPublikation.ods
+Successfully loaded data from /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Input/RAW_DATA/Energiebilanzen/NiederoesterreichDatenPublikation.ods
+Preprocessing data for the year of interest
+Data preprocessing completed for year 2022
+Finished processing and storing data for file: NiederoesterreichDatenPublikation
+
+Starting processing for file: WienDatenPublikation
+Reading data from file: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Input/RAW_DATA/Energiebilanzen/WienDatenPublikation.ods
+Successfully loaded data from /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Input/RAW_DATA/Energiebilanzen/WienDatenPublikation.ods
+Preprocessing data for the year of interest
+Data preprocessing completed for year 2022
+Finished processing and storing data for file: WienDatenPublikation
+
+Starting processing for file: SteiermarkDatenPublikation
+Reading data from file: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Input/RAW_DATA/Energiebilanzen/SteiermarkDatenPublikation.ods

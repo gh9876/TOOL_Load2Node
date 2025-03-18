@@ -1,0 +1,56 @@
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Start with Stage 4: Distribute created time series to LEGO nodes
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Processing Burgenland from /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage3/Aggregated_Data/Burgenland_time_series_aggregated_20250319.xlsx
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Processing Kärnten from /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage3/Aggregated_Data/Kärnten_time_series_aggregated_20250318.xlsx
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Processing Niederösterreich from /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage3/Aggregated_Data/Niederösterreich_time_series_aggregated_20250318.xlsx
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Processing Oberösterreich from /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage3/Aggregated_Data/Oberösterreich_time_series_aggregated_20250319.xlsx
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Processing Salzburg from /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage3/Aggregated_Data/Salzburg_time_series_aggregated_20250318.xlsx
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Processing Steiermark from /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage3/Aggregated_Data/Steiermark_time_series_aggregated_20250319.xlsx
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Processing Tirol from /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage3/Aggregated_Data/Tirol_time_series_aggregated_20250319.xlsx
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Processing Vorarlberg from /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage3/Aggregated_Data/Vorarlberg_time_series_aggregated_20250319.xlsx
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+Processing Wien from /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage3/Aggregated_Data/Wien_time_series_aggregated_20250318.xlsx
+Start with combining latest federal state output
+Files in folder: ['Oberösterreich_distribution_result_nuts2lego_test_2025_03_19.xlsx', 'Salzburg_distribution_result_nuts2lego_test_2025_03_19.xlsx', 'Salzburg_distribution_result_nuts2lego_test_2025_03_18.xlsx', 'Oberösterreich_distribution_result_nuts2lego_test_2025_03_18.xlsx', 'Burgenland_distribution_result_nuts2lego_test_2025_03_18.xlsx', 'Tirol_distribution_result_nuts2lego_test_2025_03_19.xlsx', 'Niederösterreich_distribution_result_nuts2lego_test_2025_03_18.xlsx', 'Wien_distribution_result_nuts2lego_test_2025_03_18.xlsx', 'Vorarlberg_distribution_result_nuts2lego_test_2025_03_19.xlsx', 'Vorarlberg_distribution_result_nuts2lego_test_2025_03_18.xlsx', 'Wien_distribution_result_nuts2lego_test_2025_03_19.xlsx', 'Niederösterreich_distribution_result_nuts2lego_test_2025_03_19.xlsx', 'Tirol_distribution_result_nuts2lego_test_2025_03_18.xlsx', 'Burgenland_distribution_result_nuts2lego_test_2025_03_19.xlsx', 'Kärnten_distribution_result_nuts2lego_test_2025_03_19.xlsx', 'Kärnten_distribution_result_nuts2lego_test_2025_03_18.xlsx', 'AT_LEGO_nodes_time_series_2025_03_18.xlsx', 'Steiermark_distribution_result_nuts2lego_test_2025_03_19.xlsx', 'Steiermark_distribution_result_nuts2lego_test_2025_03_18.xlsx']
+File selected for Oberösterreich: Oberösterreich_distribution_result_nuts2lego_test_2025_03_19.xlsx
+File selected for Salzburg: Salzburg_distribution_result_nuts2lego_test_2025_03_19.xlsx
+Skipped file due to date mismatch: Salzburg_distribution_result_nuts2lego_test_2025_03_18.xlsx
+Skipped file due to date mismatch: Oberösterreich_distribution_result_nuts2lego_test_2025_03_18.xlsx
+Skipped file due to date mismatch: Burgenland_distribution_result_nuts2lego_test_2025_03_18.xlsx
+File selected for Tirol: Tirol_distribution_result_nuts2lego_test_2025_03_19.xlsx
+Skipped file due to date mismatch: Niederösterreich_distribution_result_nuts2lego_test_2025_03_18.xlsx
+Skipped file due to date mismatch: Wien_distribution_result_nuts2lego_test_2025_03_18.xlsx
+File selected for Vorarlberg: Vorarlberg_distribution_result_nuts2lego_test_2025_03_19.xlsx
+Skipped file due to date mismatch: Vorarlberg_distribution_result_nuts2lego_test_2025_03_18.xlsx
+File selected for Wien: Wien_distribution_result_nuts2lego_test_2025_03_19.xlsx
+File selected for Niederösterreich: Niederösterreich_distribution_result_nuts2lego_test_2025_03_19.xlsx
+Skipped file due to date mismatch: Tirol_distribution_result_nuts2lego_test_2025_03_18.xlsx
+File selected for Burgenland: Burgenland_distribution_result_nuts2lego_test_2025_03_19.xlsx
+File selected for Kärnten: Kärnten_distribution_result_nuts2lego_test_2025_03_19.xlsx
+Skipped file due to date mismatch: Kärnten_distribution_result_nuts2lego_test_2025_03_18.xlsx
+File selected for Steiermark: Steiermark_distribution_result_nuts2lego_test_2025_03_19.xlsx
+Skipped file due to date mismatch: Steiermark_distribution_result_nuts2lego_test_2025_03_18.xlsx
+Combined data saved to: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage4/AT_LEGO_nodes_time_series_2025_03_19.xlsx
+Finished - Total runtime script: 0h 0m 36s
+
+--------------------------------------------------------------------------------

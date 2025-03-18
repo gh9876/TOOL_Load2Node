@@ -4,19 +4,22 @@ import time
 from glob import glob
 from datetime import datetime
 from config_tool_V1 import *
-import time
+from logging_function import setup_stage_logger
+
+# Set up a logger for Stage 1
+logger = setup_stage_logger("Stage1")
 
 date = datetime.today().strftime('%Y%m%d')
 start_time = time.time()
 
-print("--------------------------------------------------------------------------------")
-print("--------------------------------------------------------------------------------")
-print("Start with Stage 1: Data Preprocessing")
-print()
-print("--------------------------------------------------------------------------------")
+logger.info("--------------------------------------------------------------------------------")
+logger.info("--------------------------------------------------------------------------------")
+logger.info("Start with Stage 1: Data Preprocessing")
+logger.info("")
+logger.info("--------------------------------------------------------------------------------")
 
 # Process input data
-print("Processing energy balance sheets for federal states")
+logger.info("Processing energy balance sheets for federal states")
 
 def process_energy_data(folder_path, sheet_name, sheet_index, year_of_interest):
     """
@@ -30,18 +33,18 @@ def process_energy_data(folder_path, sheet_name, sheet_index, year_of_interest):
 
     Returns:
     - Dictionary of DataFrames where keys are file names and values are DataFrames with energy consumption data 
-    filtered by sectors (ÖNACE) and year of interest.
+      filtered by sectors (ÖNACE) and year of interest.
     """
 
     # Check if the year_of_interest is within valid range
     if year_of_interest < 1988:
-        print(f"Warning: Year of interest {year_of_interest} is earlier than the available data (1988). Using 1988 instead.")
+        logger.info(f"Warning: Year of interest {year_of_interest} is earlier than the available data (1988). Using 1988 instead.")
         year_of_interest = 1988
     elif year_of_interest > 2022:
-        print(f"Warning: Year of interest {year_of_interest} is later than the latest available data (2022). Using 2022 instead.")
+        logger.info(f"Warning: Year of interest {year_of_interest} is later than the latest available data (2022). Using 2022 instead.")
         year_of_interest = 2022
 
-    print(f"Processing data for the year: {year_of_interest}")
+    logger.info(f"Processing data for the year: {year_of_interest}")
 
     # Mapping of categories to ÖNACE codes
     category_to_onace = {
@@ -69,34 +72,34 @@ def process_energy_data(folder_path, sheet_name, sheet_index, year_of_interest):
     }
 
     def read_ods_to_dataframe(file_path, sheet_name=None, sheet_index=0):
-        print(f"Reading data from file: {file_path}")
+        logger.info(f"Reading data from file: {file_path}")
         
         if not os.path.exists(file_path):
-            print(f"Error: The file {file_path} does not exist.")
+            logger.error(f"Error: The file {file_path} does not exist.")
             return None
 
         if not file_path.lower().endswith('.ods'):
-            print(f"Error: The file {file_path} is not an ODS file.")
+            logger.error(f"Error: The file {file_path} is not an ODS file.")
             return None
 
         df = pd.read_excel(file_path, sheet_name=sheet_name, engine='odf', skiprows=3)
-        print(f"Successfully loaded data from {file_path}")
+        logger.info(f"Successfully loaded data from {file_path}")
         return df
 
     def preprocess_dataframe(df, year_of_interest):
-        print("Preprocessing data for the year of interest")
+        logger.info("Preprocessing data for the year of interest")
         year_row = df.columns
 
         if int(year_of_interest) in year_row:
             year_column = int(year_of_interest)  # Ensure we're working with integers
         else:
-            print(f"Error: No column found for the year {year_of_interest}.")
+            logger.error(f"Error: No column found for the year {year_of_interest}.")
             return pd.DataFrame()
 
         selected_rows = df.iloc[435:462, :].copy()
         filtered_selected_rows = selected_rows[selected_rows.iloc[:, 0].isin(category_to_onace.keys())].copy()
         if filtered_selected_rows.empty:
-            print("Warning: No matching categories found in the selected rows.")
+            logger.info("Warning: No matching categories found in the selected rows.")
             return pd.DataFrame()
 
         filtered_data_year = filtered_selected_rows[[filtered_selected_rows.columns[0], year_column]].copy()
@@ -106,7 +109,7 @@ def process_energy_data(folder_path, sheet_name, sheet_index, year_of_interest):
 
         final_df = filtered_data_year[["Sektor", "ÖNACE 2008", f"Sektoraler Energetischer Endverbrauch {year_of_interest}", "Einheit"]]
         final_df = final_df.rename(columns={"ÖNACE 2008": "ÖNACE"})
-        print(f"Data preprocessing completed for year {year_of_interest}")
+        logger.info(f"Data preprocessing completed for year {year_of_interest}")
 
         return final_df
 
@@ -115,7 +118,7 @@ def process_energy_data(folder_path, sheet_name, sheet_index, year_of_interest):
     
     for file_path in ods_files:
         file_name = os.path.splitext(os.path.basename(file_path))[0]
-        print(f"\nStarting processing for file: {file_name}")
+        logger.info(f"\nStarting processing for file: {file_name}")
 
         df = read_ods_to_dataframe(file_path, sheet_name, sheet_index)
         
@@ -125,25 +128,24 @@ def process_energy_data(folder_path, sheet_name, sheet_index, year_of_interest):
             if not processed_df.empty:
                 globals()[file_name] = processed_df
                 dataframes[file_name] = processed_df
-                print(f"Finished processing and storing data for file: {file_name}")
+                logger.info(f"Finished processing and storing data for file: {file_name}")
             else:
-                print(f"Warning: No data for {year_of_interest} in file {file_name}")
+                logger.info(f"Warning: No data for {year_of_interest} in file {file_name}")
         else:
-            print(f"Skipping file {file_name} due to loading issues.")
+            logger.info(f"Skipping file {file_name} due to loading issues.")
 
     return dataframes
 
 data_energy_states = process_energy_data(folder_path_states, sheet_name_sectors, sheet_index, year_of_interest)
-print("\nProcessed DataFrames:")
+logger.info("\nProcessed DataFrames:")
 for df_name in data_energy_states.keys():
-    print(f"- {df_name}")
-print("Finished processing energy balance sheets")    
-print()
-
+    logger.info(f"- {df_name}")
+logger.info("Finished processing energy balance sheets")    
+logger.info("")
 
 # Additional Processing Functions
-print("Processing employment statistics data")
-print()
+logger.info("Processing employment statistics data")
+logger.info("")
 
 def process_workforce_data(file_path, sheet_name):
     """
@@ -155,9 +157,9 @@ def process_workforce_data(file_path, sheet_name):
 
     Returns:
     - DataFrame containing ÖNACE sector classification, sector description, NUTS-ID region, and the number of employees 
-    ('Beschäftigte') in each sector.
+      ('Beschäftigte') in each sector.
     """
-    print(f"Loading workforce data from file: {file_path}, sheet: {sheet_name}")
+    logger.info(f"Loading workforce data from file: {file_path}, sheet: {sheet_name}")
     data_workforce_raw = pd.read_excel(file_path, sheet_name=sheet_name, engine='odf', header=1)
     data_workforce = data_workforce_raw.copy()
     
@@ -174,12 +176,11 @@ def process_workforce_data(file_path, sheet_name):
     return data_workforce
 
 data_workforce = process_workforce_data(file_path_workforce, sheet_name_workforce)
-print("Finished processing employment statistics data")
-print()
+logger.info("Finished processing employment statistics data")
+logger.info("")
 
-
-print(f"Processing population statistics data for the year: {year_of_interest}")
-print()
+logger.info(f"Processing population statistics data for the year: {year_of_interest}")
+logger.info("")
 
 def process_population_data(file_path, sheet_name, year_of_interest):
     """
@@ -193,7 +194,7 @@ def process_population_data(file_path, sheet_name, year_of_interest):
     Returns:
     - DataFrame containing the NUTS-Region, Region Name, and population data for the year of interest.
     """
-    print(f"Loading population data from file: {file_path}, sheet: {sheet_name}")
+    logger.info(f"Loading population data from file: {file_path}, sheet: {sheet_name}")
     data_population_raw = pd.read_excel(file_path, sheet_name=sheet_name, engine='odf', header=1)
 
     # Drop the last row (which might contain unwanted data like totals)
@@ -212,15 +213,14 @@ def process_population_data(file_path, sheet_name, year_of_interest):
     return data_population_selected_year
 
 data_population = process_population_data(file_path_population, sheet_name_population, year_of_interest)
-print("Finished processing population statistics data")
-print()
+logger.info("Finished processing population statistics data")
+logger.info("")
 
-
-print("Processing land use data of forestry and agriculture")
-print()
+logger.info("Processing land use data of forestry and agriculture")
+logger.info("")
 
 def process_farming_data(file_path, sheet_name):
-    print(f"Loading land use data from file: {file_path}, sheet: {sheet_name}")
+    logger.info(f"Loading land use data from file: {file_path}, sheet: {sheet_name}")
     data_farming_raw = pd.read_excel(file_path, sheet_name=sheet_name, engine='odf', header=1)
 
     # Extract the row where 'Flächennutzung' equals 'Gesamtfläche insgesamt'
@@ -236,12 +236,12 @@ def process_farming_data(file_path, sheet_name):
     for region in regions:
         data_area_agriculture[region] = row_of_interest[['Flächennutzung', region]].copy()
 
-    print("Land use data successfully processed.")
+    logger.info("Land use data successfully processed.")
     return data_area_agriculture
 
 data_area_agriculture = process_farming_data(file_path_farming, sheet_name_farming)
-print("Finished land use data")
-print("--------------------------------------------------------------------------------")
+logger.info("Finished land use data")
+logger.info("--------------------------------------------------------------------------------")
 
 # Save Data to Excel Files
 def export_dataframe_to_excel(dataframe, file_name, folder_name):
@@ -256,7 +256,7 @@ def export_dataframe_to_excel(dataframe, file_name, folder_name):
     with pd.ExcelWriter(output_file_path, engine='xlsxwriter') as writer:
         dataframe.to_excel(writer, index=False)
     
-    print(f"Data exported to {output_file_path}")
+    logger.info(f"Data exported to {output_file_path}")
 
 def export_land_use_data(region_dataframes, file_name, folder_name):
     if not os.path.exists(folder_name):
@@ -268,7 +268,7 @@ def export_land_use_data(region_dataframes, file_name, folder_name):
         for region, df in region_dataframes.items():
             df.to_excel(writer, sheet_name=region, index=False)
 
-    print(f"Data exported to {output_file_path}")
+    logger.info(f"Data exported to {output_file_path}")
 
 def export_energy_data(dataframes, file_name, folder_path):
     if not os.path.exists(folder_path):
@@ -281,20 +281,19 @@ def export_energy_data(dataframes, file_name, folder_path):
             sheet_name = file_name[:-11]
             df.to_excel(writer, sheet_name=sheet_name, index=False)
 
-    print(f"Electrical demand data exported to {output_file_path}")
+    logger.info(f"Electrical demand data exported to {output_file_path}")
 
 # Export Processed Data
 export_energy_data(data_energy_states, filename_energy_balance_output, stage1_output_folder)
-print()
+logger.info("")
 
 export_dataframe_to_excel(data_workforce, filename_workforce_output, stage1_output_folder)
-print()
+logger.info("")
 
 export_dataframe_to_excel(data_population, filename_population_output, stage1_output_folder)
-print()
+logger.info("")
 
 export_land_use_data(data_area_agriculture, filename_farming_output, stage1_output_folder)
-
 
 # Final Runtime Output
 end_time = time.time()
@@ -302,9 +301,9 @@ elapsed_time = end_time - start_time
 hours, rem = divmod(elapsed_time, 3600)
 minutes, seconds = divmod(rem, 60)
 
-print("--------------------------------------------------------------------------------")
-print()
-print(f"Finished with Stage 1")
-print(f"Total runtime script: {int(hours)}h {int(minutes)}m {int(seconds)}s")
-print("--------------------------------------------------------------------------------")
-print("--------------------------------------------------------------------------------")
+logger.info("--------------------------------------------------------------------------------")
+logger.info("")
+logger.info(f"Finished with Stage 1")
+logger.info(f"Total runtime script: {int(hours)}h {int(minutes)}m {int(seconds)}s")
+logger.info("--------------------------------------------------------------------------------")
+logger.info("--------------------------------------------------------------------------------")

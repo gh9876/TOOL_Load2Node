@@ -9,6 +9,7 @@ from datetime import date
 from datetime import datetime
 from config_tool_V1 import *
 from distribution_functions import *
+from logging_function import setup_stage_logger  # using logging_functions.py
 
 # =============================================================================
 # SETUP AND INITIALIZATION
@@ -20,12 +21,15 @@ start_time = time.time()
 # Get today's date formatted for filenames
 today = datetime.today().strftime("%Y_%m_%d")  # For filenames
 
-# Print header for Stage 4
-print("--------------------------------------------------------------------------------")
-print("--------------------------------------------------------------------------------")
-print("Start with Stage 4: Distribute created time series to LEGO nodes")
-print()
-print("--------------------------------------------------------------------------------")
+# Set up the logger for Stage 4
+logger = setup_stage_logger("Stage4")
+
+# Log header for Stage 4
+logger.info("--------------------------------------------------------------------------------")
+logger.info("--------------------------------------------------------------------------------")
+logger.info("Start with Stage 4: Distribute created time series to LEGO nodes")
+logger.info("")
+logger.info("--------------------------------------------------------------------------------")
 
 # =============================================================================
 # FILE PATH GENERATION
@@ -64,7 +68,7 @@ def generate_file_paths(folder_path):
             full_path = os.path.join(folder_path, matching_files[0])
             file_paths[state] = full_path
         else:
-            print(f"No matching file found for {state}")
+            logger.info(f"No matching file found for {state}")
 
     return file_paths
 
@@ -133,9 +137,9 @@ def process_all_federal_states(file_paths, output_lego2nuts, stage4_output_folde
     - None
     """
     for state, file_path in file_paths.items():
-        print("--------------------------------------------------------------------------------")
-        print("--------------------------------------------------------------------------------")
-        print(f"Processing {state} from {file_path}")
+        logger.info("--------------------------------------------------------------------------------")
+        logger.info("--------------------------------------------------------------------------------")
+        logger.info(f"Processing {state} from {file_path}")
         
         # Load the necessary data for the state
         nuts_data, mapping_data, total_demand_input = load_input_data(file_path, output_lego2nuts)
@@ -183,15 +187,15 @@ def combine_data_and_save_files(folder_path, date_format):
     Returns:
     - None
     """
-    print("Start with combining latest federal state output")
+    logger.info("Start with combining latest federal state output")
 
     latest_files = {}
-    today = datetime.today().strftime(date_format)  # Today's date in the required format, e.g., "2024_11_11"
+    today_str = datetime.today().strftime(date_format)  # Today's date in the required format, e.g., "2024_11_11"
     found_states = set()
 
     # List and normalize files in the folder
     files_in_folder = [unicodedata.normalize('NFC', file_name) for file_name in os.listdir(folder_path)]
-    print("Files in folder:", files_in_folder)
+    logger.info(f"Files in folder: {files_in_folder}")
 
     # Loop through files and select those matching the distribution result naming convention and today's date
     for file_name in files_in_folder:
@@ -201,13 +205,13 @@ def combine_data_and_save_files(folder_path, date_format):
             if match:
                 state_name, file_date = match.groups()
                 # Check if the file date matches today's date
-                if file_date == today:
+                if file_date == today_str:
                     file_path = os.path.join(folder_path, file_name)
                     latest_files[state_name] = file_path
                     found_states.add(state_name)
-                    print(f"File selected for {state_name}: {file_name}")
+                    logger.info(f"File selected for {state_name}: {file_name}")
                 else:
-                    print(f"Skipped file due to date mismatch: {file_name}")
+                    logger.info(f"Skipped file due to date mismatch: {file_name}")
 
     # Combine data from the selected files
     combined_data = []
@@ -220,23 +224,23 @@ def combine_data_and_save_files(folder_path, date_format):
             df_filtered = df[required_columns]
             combined_data.append(df_filtered)
         else:
-            print(f"Warning: File {file_path} does not have the expected structure.")
+            logger.warning(f"Warning: File {file_path} does not have the expected structure.")
 
     # Check for missing states
     all_states = {'Tirol', 'Vorarlberg', 'Wien', 'Burgenland', 'Salzburg', 'Steiermark',
                   'Niederösterreich', 'Oberösterreich', 'Kärnten'}
     missing_states = all_states - found_states
     if missing_states:
-        print(f"Warning: Missing files for states: {', '.join(missing_states)}")
+        logger.warning(f"Warning: Missing files for states: {', '.join(missing_states)}")
 
     # Save combined data if available
     if combined_data:
         combined_df = pd.concat(combined_data, ignore_index=True).drop_duplicates(subset=['LEGO ID'], keep='last')
-        output_path = os.path.join(folder_path, f'AT_LEGO_nodes_time_series_{today}.xlsx')
+        output_path = os.path.join(folder_path, f'AT_LEGO_nodes_time_series_{today_str}.xlsx')
         combined_df.to_excel(output_path, index=False)
-        print(f"Combined data saved to: {output_path}")
+        logger.info(f"Combined data saved to: {output_path}")
     else:
-        print("No valid files found or no data to combine.")
+        logger.info("No valid files found or no data to combine.")
 
 # Execute data combination and saving process
 result_nodes_df = combine_data_and_save_files(stage4_output_folder, date_format="%Y_%m_%d")
@@ -245,12 +249,12 @@ result_nodes_df = combine_data_and_save_files(stage4_output_folder, date_format=
 # FINALIZATION
 # =============================================================================
 
-# Calculate and print the total runtime of Stage 4
+# Calculate and log the total runtime of Stage 4
 end_time = time.time()
 elapsed_time = end_time - start_time
 hours, rem = divmod(elapsed_time, 3600)
 minutes, seconds = divmod(rem, 60)
 
-print(f"Finished - Total runtime script: {int(hours)}h {int(minutes)}m {int(seconds)}s")
-print()
-print("--------------------------------------------------------------------------------")
+logger.info(f"Finished - Total runtime script: {int(hours)}h {int(minutes)}m {int(seconds)}s")
+logger.info("")
+logger.info("--------------------------------------------------------------------------------")

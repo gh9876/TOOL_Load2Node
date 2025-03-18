@@ -4,30 +4,24 @@ import time
 import subprocess
 from config_tool_V1 import *
 from install_requirements import *
+from logging_function import setup_stage_logger
 
 # Run the requirements check at the beginning of the script
 check_and_install_requirements()
-print("=====================================")
-    
+
+# Set up a logger for the main script
+main_logger = setup_stage_logger("Main")
+main_logger.info("============================================================================================================")
+main_logger.info("                   Tool: Load2Node                                                                          ")
+main_logger.info("============================================================================================================")
+main_logger.info("This tool is designed to process and allocate energy demands, and develop individual consumption time series")
+main_logger.info("based on input data from Statistik Austria. The scope of action includes the region of Austria.\n")
+main_logger.info("Stages include data preprocessing, energy allocation, time series creation and distribution to LEGO nodes.\n")
+main_logger.info("You may also select preset combinations to streamline multiple stages in a single run.\n")
+main_logger.info("============================================================================================================")
+
 # Record the total start time
 start_time = time.time()
-
-# Introduction
-print()
-print("============================================================================================================")
-print("                   Tool: Load2Node                                                                          ")
-print("============================================================================================================")
-print("This tool is designed to process and allocate energy demands, and develop individual consumption time series")
-print("based on input data from Statistik Austria. The scope of action includes the region of Austria.\n")
-print("Stages include data preprocessing, energy allocation, time series creation and distribution to LEGO nodes.\n")
-print("Select from various stages or combinations to run:\n")
-print("1. Data Preprocessing")
-print("2. Energy Allocation")
-print("3. Time Series Creation")
-print("4. Distribution to LEGO Nodes\n")
-print("You may also select preset combinations to streamline")
-print("multiple stages in a single run.\n")
-print("============================================================================================================")
 
 # Get the current working directory dynamically
 current_dir = os.getcwd()
@@ -61,34 +55,35 @@ combinations = {
 }
 
 # Display options to the user
-print("Select stages to run:")
-print("1: Run only 'Data Preprocessing'")
-print("2: Run only 'Energy Allocation'")
-print("3: Run only 'Time Series Creation'")
-print("4: Run only 'Distribution to LEGO Nodes'")
-print("5: Run Stages 2 + 3")
-print("6: Run Stages 3 + 4")
-print("7: Run Stages 2 to 4")
-print("8: Run all stages")
-print()
+main_logger.info("Select stages to run:")
+main_logger.info("1: Run only 'Data Preprocessing'")
+main_logger.info("2: Run only 'Energy Allocation'")
+main_logger.info("3: Run only 'Time Series Creation'")
+main_logger.info("4: Run only 'Distribution to LEGO Nodes'")
+main_logger.info("5: Run Stages 2 + 3")
+main_logger.info("6: Run Stages 3 + 4")
+main_logger.info("7: Run Stages 2 to 4")
+main_logger.info("8: Run all stages")
+main_logger.info("")
+
 selection = input("Enter the number of your choice: ")
 
 # Validate selection
 if selection not in combinations:
-    print("Invalid selection. Please restart and choose a valid option.")
+    main_logger.error("Invalid selection. Please restart and choose a valid option.")
     sys.exit(1)
 
 # Display script paths being executed for verification
-print("\nScript paths being executed:")
+main_logger.info("\nScript paths being executed:")
 for script in scripts:
-    print(script)
+    main_logger.info(script)
 
 # Run the selected stages
 for index in combinations[selection]:
     stage = stage_names[index]
     script = scripts[index]
-    print(f"\n=== Starting Stage: {stage} ===")
-    print(f"Running script: {script}\n")
+    main_logger.info(f"\n=== Starting Stage: {stage} ===")
+    main_logger.info(f"Running script: {script}\n")
     
     # Record the start time of the current stage
     stage_start_time = time.time()
@@ -106,10 +101,10 @@ for index in combinations[selection]:
         elapsed_time = stage_end_time - stage_start_time
         hours, rem = divmod(elapsed_time, 3600)
         minutes, seconds = divmod(rem, 60)
-        print(f"\n=== Finished Stage: {stage} successfully in:{int(hours)}h {int(minutes)}m {int(seconds)}s\n ===")
+        main_logger.info(f"\n=== Finished Stage: {stage} successfully in: {int(hours)}h {int(minutes)}m {int(seconds)}s ===\n")
     except subprocess.CalledProcessError as e:
-        print(f"\n*** Error during Stage: {stage} ***")
-        print(f"Script {script} failed with error: {e}")
+        main_logger.error(f"\n*** Error during Stage: {stage} ***")
+        main_logger.error(f"Script {script} failed with error: {e}")
         break
 
 # Calculate the total runtime
@@ -119,4 +114,4 @@ hours, rem = divmod(elapsed_time, 3600)
 minutes, seconds = divmod(rem, 60)
 
 final_message = f"\nSelected stages completed in: {int(hours)}h {int(minutes)}m {int(seconds)}s\n"
-print(final_message)
+main_logger.info(final_message)

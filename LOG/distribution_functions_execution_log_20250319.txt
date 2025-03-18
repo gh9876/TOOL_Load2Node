@@ -1,0 +1,182 @@
+Mapping data for Burgenland:
+    LEGO ID  BaseVolt                     Name        lon        lat  Population_Flag         NUTS3 NUTS2 NUTS1 NUTS_Status
+21  AT00160       110                 Neusiedl  16.837900  47.960500                1  AT112, AT111  AT11   AT1     Success
+22  AT00163       110                 Zurndorf  16.994841  47.938288                1  AT112, AT111  AT11   AT1     Success
+25  AT00179       110  Südburgenland/Rotenturm  16.275500  47.250500                1         AT113  AT11   AT1     Success
+Final shape of combined_data for LEGO ID AT00160: (1, 8760), Sum of distributed data: 495422.73063309543
+Final shape of combined_data for LEGO ID AT00163: (1, 8760), Sum of distributed data: 495422.73063309543
+Final shape of combined_data for LEGO ID AT00179: (1, 8760), Sum of distributed data: 489290.05855470884
+Number of LEGO nodes from mapping data: 3
+Actual number of LEGO nodes in distributed result: 3
+Validation Passed: All LEGO nodes are present in the distributed result.
+--------------------------------------------------------------------------------
+Result validation: Burgenland
+Total demand from input time series: 1480135.519821
+Total demand distributed to LEGO nodes: 1480135.519821
+Difference between input demand and distributed demand: 0.0
+Demand tracked for each LEGO node: {'AT00160': 495422.73063309543, 'AT00163': 495422.73063309543, 'AT00179': 489290.05855470884}
+Total tracked distributed demand: 1480135.519821
+
+Data saved to: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage4/Burgenland_distribution_result_nuts2lego_test_2025_03_19.xlsx
+Mapping data for Kärnten:
+    LEGO ID  BaseVolt              Name      lon      lat  Population_Flag         NUTS3 NUTS2 NUTS1 NUTS_Status
+23  AT00172       110       Obersielach  14.6817  46.6683                1  AT213, AT211  AT21   AT2     Success
+29  AT00205       110  Malta Hauptstufe  13.3281  46.8707                1         AT212  AT21   AT2     Success
+Number of LEGO nodes from mapping data: 2
+Actual number of LEGO nodes in distributed result: 2
+Validation Passed: All LEGO nodes are present in the distributed result.
+--------------------------------------------------------------------------------
+Result validation: Kärnten
+Total demand from input time series: 4594525.963423
+Total demand distributed to LEGO nodes: 4594525.963423
+Difference between input demand and distributed demand: 0.0
+Demand tracked for each LEGO node: {'AT00172': 3690537.3566241106, 'AT00205': 903988.6067992412}
+Total tracked distributed demand: 4594525.963423
+
+Data saved to: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage4/Kärnten_distribution_result_nuts2lego_test_2025_03_19.xlsx
+Mapping data for Niederösterreich:
+    LEGO ID  BaseVolt                    Name        lon        lat  Population_Flag         NUTS3 NUTS2 NUTS1 NUTS_Status
+2   AT00015       110               Bisamberg  16.379300  48.357200                1  AT126, AT125  AT12   AT1     Success
+5   AT00032       110  Sarasdorf/Sixtneusiedl  16.695451  48.032055                1         AT127  AT12   AT1     Success
+7   AT00043       110             Pottenbrunn  15.689166  48.224722                1         AT123  AT12   AT1     Success
+8   AT00045       110                Ybbsfeld  15.050000  48.146400                1         AT121  AT12   AT1     Success
+13  AT00086       110              Ernsthofen  14.474100  48.125500                1         AT121  AT12   AT1     Success
+14  AT00100       110                Dürnrohr  15.882700  48.329400                1  AT126, AT125  AT12   AT1     Success
+17  AT00131       110                 Ternitz  16.064600  47.707300                1         AT122  AT12   AT1     Success
+18  AT00132       110             Ternitz PST  16.064600  47.707300                1         AT122  AT12   AT1     Success
+19  AT00141       110                   Theiß  15.705468  48.393991                1         AT124  AT12   AT1     Success
+Final shape of combined_data for LEGO ID AT00015: (1, 8760), Sum of distributed data: 1451626.8235837768
+Final shape of combined_data for LEGO ID AT00032: (1, 8760), Sum of distributed data: 2909500.7247216594
+Final shape of combined_data for LEGO ID AT00043: (1, 8760), Sum of distributed data: 1125417.9907878148
+Final shape of combined_data for LEGO ID AT00045: (1, 8760), Sum of distributed data: 1121275.9622547734
+Final shape of combined_data for LEGO ID AT00086: (1, 8760), Sum of distributed data: 1121275.9622547734
+Final shape of combined_data for LEGO ID AT00100: (1, 8760), Sum of distributed data: 1451626.8235837768
+Final shape of combined_data for LEGO ID AT00131: (1, 8760), Sum of distributed data: 1052446.3836822882
+Final shape of combined_data for LEGO ID AT00132: (1, 8760), Sum of distributed data: 1052446.3836822882
+Final shape of combined_data for LEGO ID AT00141: (1, 8760), Sum of distributed data: 1726732.9047139671
+Number of LEGO nodes from mapping data: 9
+Actual number of LEGO nodes in distributed result: 9
+Validation Passed: All LEGO nodes are present in the distributed result.
+--------------------------------------------------------------------------------
+Result validation: Niederösterreich
+Total demand from input time series: 13012349.959265
+Total demand distributed to LEGO nodes: 13012349.959265
+Difference between input demand and distributed demand: 0.0
+Demand tracked for each LEGO node: {'AT00015': 1451626.8235837768, 'AT00032': 2909500.7247216594, 'AT00043': 1125417.9907878148, 'AT00045': 1121275.9622547734, 'AT00086': 1121275.9622547734, 'AT00100': 1451626.8235837768, 'AT00131': 1052446.3836822882, 'AT00132': 1052446.3836822882, 'AT00141': 1726732.9047139671}
+Total tracked distributed demand: 13012349.959265
+
+Data saved to: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage4/Niederösterreich_distribution_result_nuts2lego_test_2025_03_19.xlsx
+Mapping data Oberösterreich:
+     LEGO ID  BaseVolt      Name        lon        lat  Population_Flag         NUTS3 NUTS2 NUTS1 NUTS_Status
+12   AT00079       110  Hausruck  13.899700  48.103900                1  AT312, AT315  AT31   AT3     Success
+15   AT00104       110  St.Peter  13.080000  48.256500                1         AT311  AT31   AT3     Success
+32   AT00276       110   Wallsee  14.695900  48.164300                1         AT313  AT31   AT3     Success
+41   ATKLAU2       220     Klaus  14.163055  47.821111                1         AT314  AT31   AT3     Success
+42   ATPHYR2       220     Pyhrn  14.330700  47.678200                1         AT314  AT31   AT3     Success
+43  ATSATTL2       220  Sattledt  14.052179  48.083384                1  AT312, AT315  AT31   AT3     Success
+Number of LEGO nodes from mapping data: 6
+Actual number of LEGO nodes in distributed result: 6
+Validation Passed: All LEGO nodes are present in the distributed result.
+--------------------------------------------------------------------------------
+Result validation: Oberösterreich
+Total demand from input time series: 14886808.877815
+Total demand distributed to LEGO nodes: 14886808.877815
+Difference between input demand and distributed demand: 0.0
+Demand tracked for each LEGO node: {'AT00079': 4027274.1536860187, 'AT00104': 3158642.3687846386, 'AT00276': 1689753.3299347046, 'ATKLAU2': 991932.4358618318, 'ATPHYR2': 991932.4358618318, 'ATSATTL2': 4027274.1536860187}
+Total tracked distributed demand: 14886808.877815
+
+Data saved to: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage4/Oberösterreich_distribution_result_nuts2lego_test_2025_03_19.xlsx
+Mapping data for Salzburg:
+    LEGO ID  BaseVolt           Name        lon        lat  Population_Flag         NUTS3 NUTS2 NUTS1 NUTS_Status
+9   AT00047       110        Salzach  13.029631  47.830957                1         AT323  AT32   AT3     Success
+16  AT00113       110         Kaprun  12.742222  47.259166                1  AT322, AT321  AT32   AT3     Success
+36  AT00398       110  Schwarzenbach  12.583483  47.278419                1  AT322, AT321  AT32   AT3     Success
+Number of LEGO nodes from mapping data: 3
+Actual number of LEGO nodes in distributed result: 3
+Validation Passed: All LEGO nodes are present in the distributed result.
+--------------------------------------------------------------------------------
+Result validation: Salzburg
+Total demand from input time series: 3547276.892053
+Total demand distributed to LEGO nodes: 3547276.892053
+Difference between input demand and distributed demand: 0.0
+Demand tracked for each LEGO node: {'AT00047': 2346916.9658685164, 'AT00113': 600179.9630923352, 'AT00398': 600179.9630923352}
+Total tracked distributed demand: 3547276.892053
+
+Data saved to: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage4/Salzburg_distribution_result_nuts2lego_test_2025_03_19.xlsx
+Mapping data for Steiermark:
+    LEGO ID  BaseVolt                        Name        lon        lat  Population_Flag         NUTS3 NUTS2 NUTS1 NUTS_Status
+20  AT00144       110                  Hessenberg  15.020700  47.396800                1  AT223, AT225  AT22   AT2     Success
+24  AT00175       110          Kainachtal/Zwaring  15.422800  46.903500                1         AT221  AT22   AT2     Success
+28  AT00202       110  Oststeiermark/Wünschendorf  15.728821  47.089568                1         AT224  AT22   AT2     Success
+30  AT00263       110                     Zeltweg  14.726066  47.181343                1         AT226  AT22   AT2     Success
+37  AT00624       110                 Weissenbach  14.207780  47.574640                1         AT222  AT22   AT2     Success
+Number of LEGO nodes from mapping data: 5
+Actual number of LEGO nodes in distributed result: 5
+Validation Passed: All LEGO nodes are present in the distributed result.
+--------------------------------------------------------------------------------
+Result validation: Steiermark
+Total demand from input time series: 10485362.717838
+Total demand distributed to LEGO nodes: 10485362.717838
+Difference between input demand and distributed demand: 0.0
+Demand tracked for each LEGO node: {'AT00144': 3033130.757192638, 'AT00175': 3725176.7273678565, 'AT00202': 2215079.1742459764, 'AT00263': 839177.4239172497, 'AT00624': 672798.6351142564}
+Total tracked distributed demand: 10485362.717838
+
+Data saved to: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage4/Steiermark_distribution_result_nuts2lego_test_2025_03_19.xlsx
+Mapping data Tirol:
+    LEGO ID  BaseVolt            Name        lon        lat  Population_Flag         NUTS3 NUTS2 NUTS1 NUTS_Status
+0   AT00006       110           Thaur  11.471400  47.272600                1  AT332, AT331  AT33   AT3     Success
+1   AT00012       110  Zell am Ziller  11.898200  47.233400                1         AT335  AT33   AT3     Success
+10  AT00055       110            Vill  11.391747  47.236178                1  AT332, AT331  AT33   AT3     Success
+31  AT00267       110      Kirchbichl  12.076000  47.522500                1         AT335  AT33   AT3     Success
+33  AT00347       110           Lienz  12.805400  46.824800                1         AT333  AT33   AT3     Success
+34  AT00364       110       Westtirol  10.874500  47.245600                1         AT334  AT33   AT3     Success
+35  AT00368       110           Prutz  10.665376  47.069860                1         AT334  AT33   AT3     Success
+
+Number of LEGO nodes from mapping data: 7
+Actual number of LEGO nodes in distributed result: 7
+Validation Passed: All LEGO nodes are present in the distributed result.
+--------------------------------------------------------------------------------
+Result validation: Tirol
+Total demand from input time series: 5324796.101619
+Total demand distributed to LEGO nodes: 5324796.101619
+Difference between input demand and distributed demand: 0.0
+Demand tracked for each LEGO node: {'AT00006': 1123208.5869794067, 'AT00055': 1123208.5869794067, 'AT00012': 1009745.8958438731, 'AT00267': 1009745.8958438731, 'AT00347': 409802.9460342353, 'AT00364': 324542.09496903984, 'AT00368': 324542.09496903984}
+Total tracked distributed demand: 5324796.101619
+
+Data saved to: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage4/Tirol_distribution_result_nuts2lego_test_2025_03_19.xlsx
+Mapping data for Vorarlberg:
+    LEGO ID  BaseVolt             Name     lon      lat  Population_Flag  NUTS3 NUTS2 NUTS1 NUTS_Status
+11  AT00064       110             Bürs  9.8100  47.1420                1  AT341  AT34   AT3     Success
+26  AT00183       110        Meiningen  9.5918  47.3124                1  AT342  AT34   AT3     Success
+27  AT00195       110  Werben-Dornbirn  9.7169  47.4329                1  AT342  AT34   AT3     Success
+Number of LEGO nodes from mapping data: 3
+Actual number of LEGO nodes in distributed result: 3
+Validation Passed: All LEGO nodes are present in the distributed result.
+--------------------------------------------------------------------------------
+Result validation: Vorarlberg
+Total demand from input time series: 2759791.135651
+Total demand distributed to LEGO nodes: 2759791.135651
+Difference between input demand and distributed demand: 0.0
+Demand tracked for each LEGO node: {'AT00064': 658642.3025766369, 'AT00183': 1050574.4165373351, 'AT00195': 1050574.4165373351}
+Total tracked distributed demand: 2759791.135651
+
+Data saved to: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage4/Vorarlberg_distribution_result_nuts2lego_test_2025_03_19.xlsx
+Mapping data for Wien:
+    LEGO ID  BaseVolt                Name        lon        lat  Population_Flag  NUTS3 NUTS2 NUTS1 NUTS_Status
+3   AT00020       110           Simmering  16.433888  48.181388                1  AT130  AT13   AT1     Success
+4   AT00025       110        Wien Süd-Ost  16.420000  48.122600                1  AT130  AT13   AT1     Success
+6   AT00037       110           Wien Nord  16.390085  48.257499                1  AT130  AT13   AT1     Success
+38  AT01007       110  Wien Kledlerstraße  16.311273  48.205197                1  AT130  AT13   AT1     Success
+39  AT01008       110            Wien-Süd  16.330251  48.165361                1  AT130  AT13   AT1     Success
+Number of LEGO nodes from mapping data: 5
+Actual number of LEGO nodes in distributed result: 5
+Validation Passed: All LEGO nodes are present in the distributed result.
+--------------------------------------------------------------------------------
+Result validation: Wien
+Total demand from input time series: 8012235.16
+Total demand distributed to LEGO nodes: 8012235.16
+Difference between input demand and distributed demand: 0.0
+Demand tracked for each LEGO node: {'AT00020': 1602447.0320000001, 'AT00025': 1602447.0320000001, 'AT00037': 1602447.0320000001, 'AT01007': 1602447.0320000001, 'AT01008': 1602447.0320000001}
+Total tracked distributed demand: 8012235.16
+
+Data saved to: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/Data_Output/Stage4/Wien_distribution_result_nuts2lego_test_2025_03_19.xlsx

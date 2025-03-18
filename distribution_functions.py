@@ -12,6 +12,9 @@ Description:
 import os
 import numpy as np
 import pandas as pd
+from logging_function import setup_stage_logger
+
+logger = setup_stage_logger("distribution_functions")
 
 # =============================================================================
 # UTILITY FUNCTIONS
@@ -38,7 +41,7 @@ def find_and_split_nodes_with_multiple_nuts_levels(mapping_data):
     nodes_with_multiple_nuts3 = mapping_data_split.groupby('LEGO ID')['NUTS3'].apply(list).reset_index()
     nodes_with_multiple_nuts3 = nodes_with_multiple_nuts3[nodes_with_multiple_nuts3['NUTS3'].apply(lambda x: len(x) > 1)]
     if nodes_with_multiple_nuts3.empty:
-        print("No nodes with multiple NUTS3 levels found.")
+        logger.info("No nodes with multiple NUTS3 levels found.")
         return pd.DataFrame()
     max_nuts3 = int(nodes_with_multiple_nuts3['NUTS3'].apply(len).max())
     for i in range(max_nuts3):
@@ -55,29 +58,29 @@ def validate_lego_node_count(mapping_data, distributed_data):
     - distributed_data (DataFrame): The distributed result DataFrame with LEGO node distribution.
 
     Returns:
-    - None: Prints validation results and any missing or extra LEGO node IDs.
+    - None: Logs validation results and any missing or extra LEGO node IDs.
     """
     expected_lego_nodes = mapping_data['LEGO ID'].nunique()
     actual_lego_nodes = distributed_data['LEGO ID'].nunique()
-    print(f"Number of LEGO nodes from mapping data: {expected_lego_nodes}")
-    print(f"Actual number of LEGO nodes in distributed result: {actual_lego_nodes}")
+    logger.info(f"Number of LEGO nodes from mapping data: {expected_lego_nodes}")
+    logger.info(f"Actual number of LEGO nodes in distributed result: {actual_lego_nodes}")
     if expected_lego_nodes == actual_lego_nodes:
-        print("Validation Passed: All LEGO nodes are present in the distributed result.")
+        logger.info("Validation Passed: All LEGO nodes are present in the distributed result.")
     else:
-        print("Validation Failed: Some LEGO nodes are missing or extra nodes are present in the distributed result.")
+        logger.info("Validation Failed: Some LEGO nodes are missing or extra nodes are present in the distributed result.")
         missing_lego_ids = set(mapping_data['LEGO ID']) - set(distributed_data['LEGO ID'])
         extra_lego_ids = set(distributed_data['LEGO ID']) - set(mapping_data['LEGO ID'])
         if missing_lego_ids:
-            print(f"Missing LEGO IDs: {missing_lego_ids}")
+            logger.info(f"Missing LEGO IDs: {missing_lego_ids}")
         if extra_lego_ids:
-            print(f"Extra LEGO IDs: {extra_lego_ids}")
+            logger.info(f"Extra LEGO IDs: {extra_lego_ids}")
 
 def validate_distribution_result(federal_state_name, total_demand_input, processed_time_series, distributed_demand_tracker):
     """
     Validates and debugs the distribution results for a federal state.
 
     It compares the total demand from the input time series with the total demand distributed 
-    to LEGO nodes and prints the differences along with detailed tracking of demand per node.
+    to LEGO nodes and logs the differences along with detailed tracking of demand per node.
 
     Parameters:
     - federal_state_name (str): Name of the federal state.
@@ -86,21 +89,21 @@ def validate_distribution_result(federal_state_name, total_demand_input, process
     - distributed_demand_tracker (dict): Dictionary tracking the distributed demand per LEGO node.
 
     Returns:
-    - None: Prints the validation and debugging information.
+    - None: Logs the validation and debugging information.
     """
     total_sum_distributed_time_series = processed_time_series.iloc[:, 1:].sum().sum()
     total_sum_distributed_time_series = round(total_sum_distributed_time_series, 6)
     total_demand_input = round(total_demand_input, 6)
     diff_demand = total_demand_input - total_sum_distributed_time_series
-    print("--------------------------------------------------------------------------------")
-    print(f"Result validation: {federal_state_name}")
-    print(f"Total demand from input time series: {total_demand_input}")
-    print(f"Total demand distributed to LEGO nodes: {total_sum_distributed_time_series}")
-    print(f"Difference between input demand and distributed demand: {diff_demand}")
-    print(f"Demand tracked for each LEGO node: {distributed_demand_tracker}")
+    logger.info("--------------------------------------------------------------------------------")
+    logger.info(f"Result validation: {federal_state_name}")
+    logger.info(f"Total demand from input time series: {total_demand_input}")
+    logger.info(f"Total demand distributed to LEGO nodes: {total_sum_distributed_time_series}")
+    logger.info(f"Difference between input demand and distributed demand: {diff_demand}")
+    logger.info(f"Demand tracked for each LEGO node: {distributed_demand_tracker}")
     total_tracked_demand = round(sum(distributed_demand_tracker.values()), 6)
-    print(f"Total tracked distributed demand: {total_tracked_demand}")
-    print()
+    logger.info(f"Total tracked distributed demand: {total_tracked_demand}")
+    logger.info("")
 
 # =============================================================================
 # DISTRIBUTION FUNCTIONS FOR INDIVIDUAL FEDERAL STATES
@@ -126,12 +129,12 @@ def distribute_nuts_level_data_burgenland(nuts_data, mapping_data, total_demand_
     - float: Total distributed demand for validation.
     """
     if federal_state_name != 'Burgenland':
-        print(f"The federal state '{federal_state_name}' does not match 'Burgenland'. No action taken.")
+        logger.info(f"The federal state '{federal_state_name}' does not match 'Burgenland'. No action taken.")
         return None
     mapping_data['NUTS2'] = mapping_data['NUTS2'].str.strip()
     mapping_data_burgenland = mapping_data[mapping_data['NUTS2'] == 'AT11']
     pd.set_option('display.max_rows', None)
-    print(f"Mapping data for {federal_state_name}:\n{mapping_data_burgenland}")
+    logger.info(f"Mapping data for {federal_state_name}:\n{mapping_data_burgenland}")
     processed_data = []
     distributed_demand_tracker = {}
     total_distributed_demand = 0
@@ -150,14 +153,14 @@ def distribute_nuts_level_data_burgenland(nuts_data, mapping_data, total_demand_
         if lego_combined_data is not None:
             lego_sum = lego_combined_data.sum().sum()
             total_distributed_demand += lego_sum
-            print(f"Final shape of combined_data for LEGO ID {lego_id}: {lego_combined_data.shape}, Sum of distributed data: {lego_sum}")
+            logger.info(f"Final shape of combined_data for LEGO ID {lego_id}: {lego_combined_data.shape}, Sum of distributed data: {lego_sum}")
             processed_data.append(pd.Series(
                 [lego_id] + lego_combined_data.sum(axis=0).tolist(),
                 index=['LEGO ID'] + list(nuts_data.columns[1:])
             ))
             distributed_demand_tracker[lego_id] = lego_sum
         else:
-            print(f"Error: No data was combined for LEGO ID {lego_id}. Skipping this LEGO ID.")
+            logger.info(f"Error: No data was combined for LEGO ID {lego_id}. Skipping this LEGO ID.")
     processed_time_series = pd.concat(processed_data, axis=1).T if processed_data else pd.DataFrame()
     processed_time_series.iloc[:, 1:] = processed_time_series.iloc[:, 1:].apply(pd.to_numeric, errors='coerce')
     validate_lego_node_count(mapping_data_burgenland, processed_time_series)
@@ -166,23 +169,16 @@ def distribute_nuts_level_data_burgenland(nuts_data, mapping_data, total_demand_
         os.makedirs(output_folder)
     output_path = os.path.join(output_folder, filename_result_distribution)
     processed_time_series.to_excel(output_path, index=False)
-    print(f"Data saved to: {output_path}")
+    logger.info(f"Data saved to: {output_path}")
     return total_distributed_demand
 
-# -----------------------------------------------------------------------------
-# The following functions implement similar distribution objectives for 
-# the other federal states. Their docstrings are similar in purpose to the 
-# one above for Burgenland.
-# -----------------------------------------------------------------------------
-
 def distribute_nuts_level_data_niederoesterreich(nuts_data, mapping_data, total_demand_input, federal_state_name, output_folder, filename_result_distribution):
-    # Ensure that we only process the federal state 'Niederösterreich'
     if federal_state_name != 'Niederösterreich':
-        print(f"The federal state '{federal_state_name}' does not match 'Niederösterreich'. No action taken.")
+        logger.info(f"The federal state '{federal_state_name}' does not match 'Niederösterreich'. No action taken.")
         return None
     mapping_data['NUTS2'] = mapping_data['NUTS2'].str.strip()
     mapping_data_niederösterreich = mapping_data[mapping_data['NUTS2'] == 'AT12']
-    print(f"Mapping data for {federal_state_name}:\n{mapping_data_niederösterreich}")
+    logger.info(f"Mapping data for {federal_state_name}:\n{mapping_data_niederösterreich}")
     processed_data = []
     distributed_demand_tracker = {}
     total_distributed_demand = 0
@@ -198,19 +194,17 @@ def distribute_nuts_level_data_niederoesterreich(nuts_data, mapping_data, total_
                 num_sharing_lego_nodes = len(lego_nodes_sharing_nuts3)
                 divided_data = relevant_data.iloc[:, 1:] / num_sharing_lego_nodes
                 lego_combined_data = divided_data if lego_combined_data is None else lego_combined_data + divided_data.values
-                print(f"Debug: Dividing data for NUTS3 ID {nuts_id} across {num_sharing_lego_nodes} LEGO nodes. "
-                      f"Shape of divided data: {divided_data.shape}, Sum: {divided_data.sum().sum()}")
         if lego_combined_data is not None:
             lego_sum = lego_combined_data.sum().sum()
             total_distributed_demand += lego_sum
-            print(f"Final shape of combined_data for LEGO ID {lego_id}: {lego_combined_data.shape}, Sum of distributed data: {lego_sum}")
+            logger.info(f"Final shape of combined_data for LEGO ID {lego_id}: {lego_combined_data.shape}, Sum of distributed data: {lego_sum}")
             processed_data.append(pd.Series(
                 [lego_id] + lego_combined_data.sum(axis=0).tolist(),
                 index=['LEGO ID'] + list(nuts_data.columns[1:])
             ))
             distributed_demand_tracker[lego_id] = lego_sum
         else:
-            print(f"Error: No data was combined for LEGO ID {lego_id}. Skipping this LEGO ID.")
+            logger.info(f"Error: No data was combined for LEGO ID {lego_id}. Skipping this LEGO ID.")
     processed_time_series = pd.concat(processed_data, axis=1).T if processed_data else pd.DataFrame()
     processed_time_series.iloc[:, 1:] = processed_time_series.iloc[:, 1:].apply(pd.to_numeric, errors='coerce')
     validate_lego_node_count(mapping_data_niederösterreich, processed_time_series)
@@ -219,14 +213,14 @@ def distribute_nuts_level_data_niederoesterreich(nuts_data, mapping_data, total_
         os.makedirs(output_folder)
     output_path = os.path.join(output_folder, filename_result_distribution)
     processed_time_series.to_excel(output_path, index=False)
-    print(f"Data saved to: {output_path}")
+    logger.info(f"Data saved to: {output_path}")
     return total_distributed_demand
 
 def distribute_nuts_level_data_oberoesterreich(nuts_data, mapping_data, total_demand_input, federal_state_name, output_folder, filename_result_distribution):
     mapping_data['NUTS2'] = mapping_data['NUTS2'].str.strip()
     mapping_data_oberoesterreich = mapping_data[mapping_data['NUTS2'] == 'AT31']
     pd.set_option('display.max_rows', None)
-    print(f"Mapping data {federal_state_name}:\n{mapping_data_oberoesterreich}")
+    logger.info(f"Mapping data {federal_state_name}:\n{mapping_data_oberoesterreich}")
     processed_data = []
     distributed_demand_tracker = {}
     total_distributed_demand = 0
@@ -251,7 +245,7 @@ def distribute_nuts_level_data_oberoesterreich(nuts_data, mapping_data, total_de
             ))
             distributed_demand_tracker[lego_id] = lego_sum
         else:
-            print(f"Error: No data was combined for LEGO ID {lego_id}. Skipping this LEGO ID.")
+            logger.info(f"Error: No data was combined for LEGO ID {lego_id}. Skipping this LEGO ID.")
     processed_time_series = pd.concat(processed_data, axis=1).T if processed_data else pd.DataFrame()
     processed_time_series.iloc[:, 1:] = processed_time_series.iloc[:, 1:].apply(pd.to_numeric, errors='coerce')
     validate_lego_node_count(mapping_data_oberoesterreich, processed_time_series)
@@ -260,14 +254,14 @@ def distribute_nuts_level_data_oberoesterreich(nuts_data, mapping_data, total_de
         os.makedirs(output_folder)
     output_path = os.path.join(output_folder, filename_result_distribution)
     processed_time_series.to_excel(output_path, index=False)
-    print(f"Data saved to: {output_path}")
+    logger.info(f"Data saved to: {output_path}")
     return total_distributed_demand
 
 def distribute_nuts_level_data_tirol(nuts_data, mapping_data, total_demand_input, federal_state_name, output_folder, filename_result_distribution):
     mapping_data['NUTS2'] = mapping_data['NUTS2'].str.strip()
     mapping_data_tirol = mapping_data[mapping_data['NUTS2'] == 'AT33']
     pd.set_option('display.max_rows', None)
-    print(f"Mapping data {federal_state_name}:\n{mapping_data_tirol}\n")
+    logger.info(f"Mapping data {federal_state_name}:\n{mapping_data_tirol}\n")
     nodes_with_multiple_nuts3 = find_and_split_nodes_with_multiple_nuts_levels(mapping_data_tirol)
     processed_data = []
     distributed_demand_tracker = {}
@@ -293,7 +287,7 @@ def distribute_nuts_level_data_tirol(nuts_data, mapping_data, total_demand_input
             ))
             distributed_demand_tracker[lego_id] = lego_sum
         else:
-            print(f"Error: No data was combined for LEGO ID {lego_id}. Skipping this LEGO ID.")
+            logger.info(f"Error: No data was combined for LEGO ID {lego_id}. Skipping this LEGO ID.")
     for nuts_id in mapping_data_tirol['NUTS3'].unique():
         if nuts_id not in distributed_demand_tracker:
             relevant_data = nuts_data[nuts_data['NUTS-ID'].str.strip() == nuts_id.strip()]
@@ -319,7 +313,7 @@ def distribute_nuts_level_data_tirol(nuts_data, mapping_data, total_demand_input
         os.makedirs(output_folder)
     output_path = os.path.join(output_folder, filename_result_distribution)
     processed_time_series.to_excel(output_path, index=False)
-    print(f"Data saved to: {output_path}")
+    logger.info(f"Data saved to: {output_path}")
     return total_distributed_demand
 
 def distribute_nuts_level_data_kaernten(nuts_data, mapping_data, total_demand_input, federal_state_name, output_folder, filename_result_distribution):
@@ -327,10 +321,10 @@ def distribute_nuts_level_data_kaernten(nuts_data, mapping_data, total_demand_in
     Distributes time series data for Kärnten to LEGO nodes and saves the results to an Excel file.
     """
     if federal_state_name != 'Kärnten':
-        print(f"The federal state '{federal_state_name}' does not match 'Kärnten'. No action taken.")
+        logger.info(f"The federal state '{federal_state_name}' does not match 'Kärnten'. No action taken.")
         return None
     mapping_data_kaernten = mapping_data[mapping_data['NUTS2'].str.strip() == 'AT21']
-    print(f"Mapping data for {federal_state_name}:\n{mapping_data_kaernten}")
+    logger.info(f"Mapping data for {federal_state_name}:\n{mapping_data_kaernten}")
     processed_data = []
     distributed_demand_tracker = {}
     total_distributed_demand = 0
@@ -355,7 +349,7 @@ def distribute_nuts_level_data_kaernten(nuts_data, mapping_data, total_demand_in
             ))
             distributed_demand_tracker[lego_id] = lego_sum
         else:
-            print(f"Error: No data was combined for LEGO ID {lego_id}. Skipping this LEGO ID.")
+            logger.info(f"Error: No data was combined for LEGO ID {lego_id}. Skipping this LEGO ID.")
     processed_time_series = pd.concat(processed_data, axis=1).T if processed_data else pd.DataFrame()
     processed_time_series.iloc[:, 1:] = processed_time_series.iloc[:, 1:].apply(pd.to_numeric, errors='coerce')
     validate_lego_node_count(mapping_data_kaernten, processed_time_series)
@@ -364,7 +358,7 @@ def distribute_nuts_level_data_kaernten(nuts_data, mapping_data, total_demand_in
         os.makedirs(output_folder)
     output_path = os.path.join(output_folder, filename_result_distribution)
     processed_time_series.to_excel(output_path, index=False)
-    print(f"Data saved to: {output_path}")
+    logger.info(f"Data saved to: {output_path}")
     return total_distributed_demand
 
 def distribute_nuts_level_data_salzburg(nuts_data, mapping_data, total_demand_input, federal_state_name, output_folder, filename_result_distribution):
@@ -372,10 +366,10 @@ def distribute_nuts_level_data_salzburg(nuts_data, mapping_data, total_demand_in
     Distributes time series data for Salzburg to LEGO nodes and saves the results to an Excel file.
     """
     if federal_state_name != 'Salzburg':
-        print(f"The federal state '{federal_state_name}' does not match 'Salzburg'. No action taken.")
+        logger.info(f"The federal state '{federal_state_name}' does not match 'Salzburg'. No action taken.")
         return None
     mapping_data_salzburg = mapping_data[mapping_data['NUTS2'].str.strip() == 'AT32']
-    print(f"Mapping data for {federal_state_name}:\n{mapping_data_salzburg}")
+    logger.info(f"Mapping data for {federal_state_name}:\n{mapping_data_salzburg}")
     processed_data = []
     distributed_demand_tracker = {}
     total_distributed_demand = 0
@@ -400,7 +394,7 @@ def distribute_nuts_level_data_salzburg(nuts_data, mapping_data, total_demand_in
             ))
             distributed_demand_tracker[lego_id] = lego_sum
         else:
-            print(f"Error: No data was combined for LEGO ID {lego_id}. Skipping this LEGO ID.")
+            logger.info(f"Error: No data was combined for LEGO ID {lego_id}. Skipping this LEGO ID.")
     processed_time_series = pd.concat(processed_data, axis=1).T if processed_data else pd.DataFrame()
     processed_time_series.iloc[:, 1:] = processed_time_series.iloc[:, 1:].apply(pd.to_numeric, errors='coerce')
     validate_lego_node_count(mapping_data_salzburg, processed_time_series)
@@ -409,7 +403,7 @@ def distribute_nuts_level_data_salzburg(nuts_data, mapping_data, total_demand_in
         os.makedirs(output_folder)
     output_path = os.path.join(output_folder, filename_result_distribution)
     processed_time_series.to_excel(output_path, index=False)
-    print(f"Data saved to: {output_path}")
+    logger.info(f"Data saved to: {output_path}")
     return total_distributed_demand
 
 def distribute_nuts_level_data_vorarlberg(nuts_data, mapping_data, total_demand_input, federal_state_name, output_folder, filename_result_distribution):
@@ -417,10 +411,10 @@ def distribute_nuts_level_data_vorarlberg(nuts_data, mapping_data, total_demand_
     Distributes time series data for Vorarlberg across LEGO nodes and saves the results to an Excel file.
     """
     if federal_state_name != 'Vorarlberg':
-        print(f"The federal state '{federal_state_name}' does not match 'Vorarlberg'. No action taken.")
+        logger.info(f"The federal state '{federal_state_name}' does not match 'Vorarlberg'. No action taken.")
         return None
     mapping_data_vorarlberg = mapping_data[mapping_data['NUTS2'].str.strip() == 'AT34']
-    print(f"Mapping data for {federal_state_name}:\n{mapping_data_vorarlberg}")
+    logger.info(f"Mapping data for {federal_state_name}:\n{mapping_data_vorarlberg}")
     processed_data = []
     distributed_demand_tracker = {}
     total_distributed_demand = 0
@@ -445,7 +439,7 @@ def distribute_nuts_level_data_vorarlberg(nuts_data, mapping_data, total_demand_
             ))
             distributed_demand_tracker[lego_id] = lego_sum
         else:
-            print(f"Error: No data was combined for LEGO ID {lego_id}. Skipping this LEGO ID.")
+            logger.info(f"Error: No data was combined for LEGO ID {lego_id}. Skipping this LEGO ID.")
     processed_time_series = pd.concat(processed_data, axis=1).T if processed_data else pd.DataFrame()
     processed_time_series.iloc[:, 1:] = processed_time_series.iloc[:, 1:].apply(pd.to_numeric, errors='coerce')
     validate_lego_node_count(mapping_data_vorarlberg, processed_time_series)
@@ -454,7 +448,7 @@ def distribute_nuts_level_data_vorarlberg(nuts_data, mapping_data, total_demand_
         os.makedirs(output_folder)
     output_path = os.path.join(output_folder, filename_result_distribution)
     processed_time_series.to_excel(output_path, index=False)
-    print(f"Data saved to: {output_path}")
+    logger.info(f"Data saved to: {output_path}")
     return total_distributed_demand
 
 def distribute_nuts_level_data_wien(nuts_data, mapping_data, total_demand_input, federal_state_name, output_folder, filename_result_distribution):
@@ -462,10 +456,10 @@ def distribute_nuts_level_data_wien(nuts_data, mapping_data, total_demand_input,
     Distributes time series data for Wien across LEGO nodes and saves the results to an Excel file.
     """
     if federal_state_name != 'Wien':
-        print(f"The federal state '{federal_state_name}' does not match 'Wien'. No action taken.")
+        logger.info(f"The federal state '{federal_state_name}' does not match 'Wien'. No action taken.")
         return None
     mapping_data_wien = mapping_data[mapping_data['NUTS2'].str.strip() == 'AT13']
-    print(f"Mapping data for {federal_state_name}:\n{mapping_data_wien}")
+    logger.info(f"Mapping data for {federal_state_name}:\n{mapping_data_wien}")
     processed_data = []
     distributed_demand_tracker = {}
     total_distributed_demand = 0
@@ -490,7 +484,7 @@ def distribute_nuts_level_data_wien(nuts_data, mapping_data, total_demand_input,
             ))
             distributed_demand_tracker[lego_id] = lego_sum
         else:
-            print(f"Error: No data was combined for LEGO ID {lego_id}. Skipping this LEGO ID.")
+            logger.info(f"Error: No data was combined for LEGO ID {lego_id}. Skipping this LEGO ID.")
     processed_time_series = pd.concat(processed_data, axis=1).T if processed_data else pd.DataFrame()
     processed_time_series.iloc[:, 1:] = processed_time_series.iloc[:, 1:].apply(pd.to_numeric, errors='coerce')
     validate_lego_node_count(mapping_data_wien, processed_time_series)
@@ -499,7 +493,7 @@ def distribute_nuts_level_data_wien(nuts_data, mapping_data, total_demand_input,
         os.makedirs(output_folder)
     output_path = os.path.join(output_folder, filename_result_distribution)
     processed_time_series.to_excel(output_path, index=False)
-    print(f"Data saved to: {output_path}")
+    logger.info(f"Data saved to: {output_path}")
     return total_distributed_demand
 
 def distribute_nuts_level_data_steiermark(nuts_data, mapping_data, total_demand_input, federal_state_name, output_folder, filename_result_distribution):
@@ -507,10 +501,10 @@ def distribute_nuts_level_data_steiermark(nuts_data, mapping_data, total_demand_
     Distributes time series data for Steiermark across LEGO nodes and saves the results to an Excel file.
     """
     if federal_state_name != 'Steiermark':
-        print(f"The federal state '{federal_state_name}' does not match 'Steiermark'. No action taken.")
+        logger.info(f"The federal state '{federal_state_name}' does not match 'Steiermark'. No action taken.")
         return None
     mapping_data_steiermark = mapping_data[mapping_data['NUTS2'].str.strip() == 'AT22']
-    print(f"Mapping data for {federal_state_name}:\n{mapping_data_steiermark}")
+    logger.info(f"Mapping data for {federal_state_name}:\n{mapping_data_steiermark}")
     processed_data = []
     distributed_demand_tracker = {}
     total_distributed_demand = 0
@@ -535,7 +529,7 @@ def distribute_nuts_level_data_steiermark(nuts_data, mapping_data, total_demand_
             ))
             distributed_demand_tracker[lego_id] = lego_sum
         else:
-            print(f"Error: No data was combined for LEGO ID {lego_id}. Skipping this LEGO ID.")
+            logger.info(f"Error: No data was combined for LEGO ID {lego_id}. Skipping this LEGO ID.")
     processed_time_series = pd.concat(processed_data, axis=1).T if processed_data else pd.DataFrame()
     processed_time_series.iloc[:, 1:] = processed_time_series.iloc[:, 1:].apply(pd.to_numeric, errors='coerce')
     validate_lego_node_count(mapping_data_steiermark, processed_time_series)
@@ -544,5 +538,5 @@ def distribute_nuts_level_data_steiermark(nuts_data, mapping_data, total_demand_
         os.makedirs(output_folder)
     output_path = os.path.join(output_folder, filename_result_distribution)
     processed_time_series.to_excel(output_path, index=False)
-    print(f"Data saved to: {output_path}")
+    logger.info(f"Data saved to: {output_path}")
     return total_distributed_demand

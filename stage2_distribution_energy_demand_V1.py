@@ -8,37 +8,12 @@ from logging_function import setup_stage_logger
 # =============================================================================
 # SETUP AND INITIALIZATION
 # =============================================================================
-
-# Setup the logger for this stage based on the stage name.
-logger = setup_stage_logger("Stage1_Data_Preprocessing")
-logger.info("Starting Data Preprocessing Stage...")
-
-# Example logging for loading and processing steps.
-try:
-    logger.info("Loading data...")
-    # Code for loading data goes here
-    # ...
-
-    logger.info("Processing data...")
-    # Code for data processing goes here
-    # ...
-
-    logger.info("Stage completed successfully.")
-except Exception as e:
-    logger.error(f"An error occurred: {e}")
-
-# Record the start time of Stage 2
 start_time = time.time()
-
-# =============================================================================
-# STAGE 2: Breakdown of Energy Demand by NUTS3 Level
-# =============================================================================
-
-print("--------------------------------------------------------------------------------")
-print("--------------------------------------------------------------------------------")
-print("Start with Stage 2: Breakdown of energy demand by NUTS3 level")
-print()
-print("--------------------------------------------------------------------------------")
+# Set up the logger for this stage with an appropriate stage name.
+logger = setup_stage_logger("Stage2_EnergyAllocation")
+logger.info("Starting Stage 2: Breakdown of energy demand by NUTS3 level")
+logger.info("--------------------------------------------------------------------------------")
+logger.info("--------------------------------------------------------------------------------")
 
 # List of all federal states to be processed
 federal_states = [
@@ -66,7 +41,7 @@ def check_required_files(*file_paths):
     all_files_exist = True
     for file_path in file_paths:
         if not os.path.exists(file_path):
-            print(f"Required file not found: {file_path}")
+            logger.error(f"Required file not found: {file_path}")
             all_files_exist = False
     return all_files_exist
 
@@ -116,8 +91,7 @@ def distribute_energy_consumption(file_path_population, file_path_energy, energy
         (population_data['NUTS-Region'].str.len() == 5)
     ]
     energy_data = pd.read_excel(file_path_energy, sheet_name=energy_sheet_name)
-    # Create a copy of energy data (if further modifications are needed)
-    energy_data.copy()
+    energy_data.copy()  # create a copy if further modifications are needed
     private_households_data = energy_data[energy_data['Sektor'] == 'Private Haushalte']
     total_energy_consumption = private_households_data[f"Sektoraler Energetischer Endverbrauch {year_of_interest}"].values[0]
     total_population = subregion_population[2022].sum()
@@ -210,7 +184,7 @@ def process_agricultural_data_for_state(file_path_area, file_path_demand, file_p
     if 'NUTS ' in gemeindestatistik_df.columns:
         gemeindestatistik_df['NUTS '] = gemeindestatistik_df['NUTS '].str.strip()
     else:
-        print("The 'NUTS' column was not found. Please check the column names and update accordingly.")
+        logger.error("The 'NUTS' column was not found. Please check the column names and update accordingly.")
         return pd.DataFrame()
 
     # Extract the total agricultural area from the land use data
@@ -218,7 +192,7 @@ def process_agricultural_data_for_state(file_path_area, file_path_demand, file_p
     if not total_agricultural_area_row.empty:
         total_agricultural_area = total_agricultural_area_row.iloc[0, 1]
     else:
-        print("No data found for total agricultural area.")
+        logger.error("No data found for total agricultural area.")
         return pd.DataFrame()
 
     # Extract the total electrical demand for the agricultural sector
@@ -228,13 +202,13 @@ def process_agricultural_data_for_state(file_path_area, file_path_demand, file_p
             f"Sektoraler Energetischer Endverbrauch {year_of_interest}"
         ].values[0]
     else:
-        print("No data found for electrical demand.")
+        logger.error("No data found for electrical demand.")
         return pd.DataFrame()
 
     # Filter general statistics data for the specified NUTS3 regions
     gemeindestatistik_df_filtered = gemeindestatistik_df[gemeindestatistik_df['NUTS '].isin(nuts3_regions)].copy()
     if gemeindestatistik_df_filtered.empty:
-        print("No data found after filtering for specified NUTS3 regions.")
+        logger.error("No data found after filtering for specified NUTS3 regions.")
         return pd.DataFrame()
 
     # Convert area data from km² to hectares (1 km² = 100 ha) after cleaning the string format
@@ -254,6 +228,7 @@ def process_agricultural_data_for_state(file_path_area, file_path_demand, file_p
         'NUTS ': 'NUTS-Region',
         'Electrical Demand (MWh)': 'Allocated Energy Consumption (MWh)'
     })
+    
     gemeindestatistik_df_filtered['Sektor'] = 'Landwirtschaft'
     gemeindestatistik_df_filtered['ÖNACE'] = 'A'
     
@@ -271,12 +246,12 @@ def save_combined_dataframe(combined_df_final, output_folder, flachennutzung_she
     Returns:
     - None
     """
-    print(f"Processing {flachennutzung_sheet} dataset")
+    logger.info(f"Processing {flachennutzung_sheet} dataset")
     os.makedirs(output_folder, exist_ok=True)
     filename = f"Energiebilanz_Verteilung_{flachennutzung_sheet}_{today}.xlsx"
     file_path = os.path.join(output_folder, filename)
     combined_df_final.to_excel(file_path, index=False)
-    print(f"DataFrame saved successfully to {file_path}")
+    logger.info(f"DataFrame saved successfully to {file_path}")
 
 def process_all_federal_states(federal_states, data_path_energy, data_path_workforce, data_path_population, data_path_farming, file_path_stats, stage2_output_folder):
     """
@@ -297,7 +272,7 @@ def process_all_federal_states(federal_states, data_path_energy, data_path_workf
     # Check for required input files before processing
     required_files = [data_path_energy, data_path_workforce, data_path_population, data_path_farming]
     if not check_required_files(*required_files):
-        print("Correct input data is not found, please run Stage 1 before running Stage 2.")
+        logger.error("Correct input data is not found, please run Stage 1 before running Stage 2.")
         return
 
     for flachennutzung_sheet in federal_states:
@@ -356,10 +331,10 @@ def process_all_federal_states(federal_states, data_path_energy, data_path_workf
         # Save the combined DataFrame to an Excel file
         save_combined_dataframe(combined_df_final, stage2_output_folder, flachennutzung_sheet)
 
-        # Print total allocated energy consumption for the current state
+        # Log total allocated energy consumption for the current state
         total_demand = combined_df_final['Allocated Energy Consumption (MWh)'].sum()
-        print(f"Total Allocated Energy Consumption for {flachennutzung_sheet} (MWh): {total_demand}")
-        print()
+        logger.info(f"Total Allocated Energy Consumption for {flachennutzung_sheet} (MWh): {total_demand}")
+        logger.info("")
 
 # =============================================================================
 # EXECUTION OF STAGE 2 PROCESSING
@@ -375,10 +350,10 @@ process_all_federal_states(
     stage2_output_folder
 )
 
-# Calculate and print the total runtime of Stage 2
+# Calculate and log the total runtime of Stage 2
 end_time = time.time()
 elapsed_time = end_time - start_time
 hours, rem = divmod(elapsed_time, 3600)
 minutes, seconds = divmod(rem, 60)
-print(f"Finished with Stage 2 - Total runtime script: {int(hours)}h {int(minutes)}m {int(seconds)}s")
-print()
+logger.info(f"Finished with Stage 2 - Total runtime script: {int(hours)}h {int(minutes)}m {int(seconds)}s")
+logger.info("")

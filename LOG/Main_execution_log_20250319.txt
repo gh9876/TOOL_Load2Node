@@ -1,0 +1,58 @@
+============================================================================================================
+                   Tool: Load2Node                                                                          
+============================================================================================================
+This tool is designed to process and allocate energy demands, and develop individual consumption time series
+based on input data from Statistik Austria. The scope of action includes the region of Austria.
+
+Stages include data preprocessing, energy allocation, time series creation and distribution to LEGO nodes.
+
+You may also select preset combinations to streamline multiple stages in a single run.
+
+============================================================================================================
+Select stages to run:
+1: Run only 'Data Preprocessing'
+2: Run only 'Energy Allocation'
+3: Run only 'Time Series Creation'
+4: Run only 'Distribution to LEGO Nodes'
+5: Run Stages 2 + 3
+6: Run Stages 3 + 4
+7: Run Stages 2 to 4
+8: Run all stages
+
+
+Script paths being executed:
+/Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/stage1_data_preprocessing_V1.py
+/Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/stage2_distribution_energy_demand_V1.py
+/Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/stage3_create_time_series_V1.py
+/Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/stage4_distribution2nodes_V1.py
+
+=== Starting Stage: Data Preprocessing ===
+Running script: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/stage1_data_preprocessing_V1.py
+
+
+=== Finished Stage: Data Preprocessing successfully in: 0h 4m 38s ===
+
+
+=== Starting Stage: Energy Allocation ===
+Running script: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/stage2_distribution_energy_demand_V1.py
+
+
+=== Finished Stage: Energy Allocation successfully in: 0h 0m 1s ===
+
+
+=== Starting Stage: Time Series Creation ===
+Running script: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/stage3_create_time_series_V1.py
+
+
+=== Finished Stage: Time Series Creation successfully in: 0h 0m 48s ===
+
+
+=== Starting Stage: Distribution to LEGO Nodes ===
+Running script: /Users/hopf/Nextcloud/00_Masterarbeit/Tool_Load2Node_V1/stage4_distribution2nodes_V1.py
+
+
+=== Finished Stage: Distribution to LEGO Nodes successfully in: 0h 0m 36s ===
+
+
+Selected stages completed in: 0h 6m 9s
+
