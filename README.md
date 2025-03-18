@@ -1,6 +1,6 @@
-# Tool_Load2Node
+# Tool: Load2Node
 
-**Tool_Load2Node** is a modular, open-source Python tool developed to process and distribute energy load data for use in simulation programs such as LEGO. The tool converts raw input datasets (e.g., energy balance sheets, employment statistics, population data, agricultural land use data) into structured output that can be directly used for simulation purposes. It also integrates geographical information through NUTS (Nomenclature of Territorial Units for Statistics) assignment via the OpenCage Geocoder API.
+**Tool: Load2Node** is a modular, open-source Python tool developed to process and distribute energy load data for use in simulation programs such as LEGO. The tool converts raw input datasets (e.g., energy balance sheets, employment statistics, population data, agricultural land use data) into structured output that can be directly used for simulation purposes. It also integrates geographical information through NUTS (Nomenclature of Territorial Units for Statistics) assignment via the OpenCage Geocoder API.
 
 ## Overview
 
